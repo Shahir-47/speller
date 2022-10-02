@@ -1,6 +1,6 @@
 # speller
 
-This problem implement a program that spell-checks a file using a hash table. The program outputs misspelled words. This program also counts the number of mispelled words, words in the words dictionary, words in uploaded text. Also the program tells how long it took to perform each function of the program and then tells us the total running time of the program 
+This problem implement a program that spell-checks a file using a hash table. The program outputs misspelled words. This program also outputs the number of mispelled words, words in the words dictionary against which the misspelled words are checked against, words in uploaded text. Also the program tells how long it took to perform each function of the program and then tells us the total running time of the program.
 
 Execution command example: 
 
