@@ -2,54 +2,116 @@
 
 ## Overview
 
-**Speller** is a high-performance spell-checking program that uses a hash table to efficiently verify the spelling of words in a text file. The program compares words from a text file against a dictionary file and reports any misspelled words, along with performance benchmarks for loading, checking, and unloading the dictionary.
+**Speller** is a high-performance program that checks the spelling of words in a text file against a dictionary. Built with a hash table for efficient lookups, it identifies misspelled words while providing detailed performance metrics for key operations like loading the dictionary, checking words, and freeing memory.
 
-## Features
+This project demonstrates core principles of data structures, algorithms, and memory management in C.
 
-- Identifies misspelled words in text files.
-- Utilizes a hash table with adjustable bucket sizes for improved performance.
-- Supports custom dictionary files.
-- Reports detailed performance benchmarks for:
-  - Dictionary loading.
-  - Word checking.
-  - Dictionary size determination.
-  - Dictionary unloading.
+---
 
-## Usage
+## Key Features
 
-### Step 1: Compile the Program
+- **Efficient Spell-Checking:** Uses a hash table for rapid word lookups.
+- **Customizable Dictionaries:** Accepts any dictionary file in plain text format.
+- **Performance Metrics:** Reports the time taken for:
+  - Loading the dictionary.
+  - Checking words.
+  - Determining dictionary size.
+  - Unloading memory.
+- **Optimized Hashing:** Implements the `djb2` hash function for balanced performance and distribution.
 
-Use the provided `Makefile` to compile the program:
+---
+
+## Prerequisites
+
+Before running the program, ensure your system has:
+1. A C compiler (`clang` or `gcc`).
+2. The `make` build tool.
+
+Follow the instructions below to install Clang and Make based on your operating system.
+
+---
+
+### Installing Clang and Make
+
+#### **For Ubuntu/Linux**
+1. Update your package list:
+   ```bash
+   sudo apt update
+   ```
+2. Install Clang and Make:
+   ```bash
+   sudo apt install clang make
+   ```
+3. Verify Clang installation:
+   ```bash
+   clang --version
+   ```
+
+#### **For macOS**
+1. Install Xcode Command Line Tools:
+   ```bash
+   xcode-select --install
+   ```
+2. Verify Clang installation:
+   ```bash
+   clang --version
+   ```
+
+#### **For Windows**
+1. Download the LLVM installer from the [official LLVM website](https://llvm.org/builds/).
+2. Run the installer and follow the on-screen instructions.
+3. Add the LLVM `bin` directory (e.g., `C:\Program Files\LLVM\bin`) to your system's `PATH` environment variable:
+   - Open "Environment Variables" in Windows settings.
+   - Edit the `Path` variable and add the directory.
+4. Verify Clang installation:
+   ```cmd
+   clang --version
+   ```
+
+---
+
+## Getting Started
+
+### Step 1: Clone the Repository
+Clone the project repository to your local machine:
+```bash
+git clone https://github.com/Shahir-47/speller.git
+cd speller/speller
+```
+
+### Step 2: Compile the Program
+Use the provided `Makefile` to build the program:
 ```bash
 make speller
 ```
 
-This will create an executable file named `speller`.
+This will generate an executable file named `speller`.
 
-### Step 2: Run the Program
-
+### Step 3: Run the Program
 Run the program using the following syntax:
 ```bash
 ./speller [DICTIONARY] text
 ```
 
 ### Parameters
-- **DICTIONARY** (optional): The path to the dictionary file. Defaults to `dictionaries/large` if not provided.
-- **text** (required): The path to the text file to be spell-checked.
+- **DICTIONARY** (optional): Path to the dictionary file. Defaults to `dictionaries/large` if not provided.
+- **text** (required): Path to the text file to be spell-checked.
 
-### Example Usage
+---
 
-Using the default dictionary:
+## Usage Examples
+
+#### **Using the Default Dictionary**
 ```bash
 ./speller texts/lalaland.txt
 ```
 
-Specifying a custom dictionary:
+#### **Specifying a Custom Dictionary**
 ```bash
 ./speller dictionaries/small texts/shakespeare.txt
 ```
 
-### Example Output
+#### **Sample Output**
 ```plaintext
 MISSPELLED WORDS
 
@@ -71,6 +133,8 @@ TIME IN unload:       0.04
 TIME IN TOTAL:        0.62
 ```
 
+---
+
 ## Project Structure
 
 ```
@@ -78,10 +142,8 @@ TIME IN TOTAL:        0.62
 │   ├── dictionaries/
 │   │   ├── small
 │   │   └── large
-│   ├── keys/
-│   │   ├── (test text files)
 │   ├── texts/
-│   │   ├── (test text files)
+│   │   ├── (various test text files)
 │   ├── dictionary.c
 │   ├── dictionary.h
 │   ├── speller.c
@@ -89,43 +151,37 @@ TIME IN TOTAL:        0.62
 └── README.md
 ```
 
-- **dictionaries/**: Contains the dictionary files (`small` for debugging, `large` with 143,091 words).
-- **keys/** and **texts/**: Various text files for testing the program.
-- **speller.c**: The main program file.
-- **dictionary.c**: Contains the implementation of dictionary functions.
-- **dictionary.h**: Header file defining dictionary-related functions and constants.
-- **Makefile**: Automates the build process.
+- **`dictionaries/`**: Contains dictionary files, including `small` for debugging and `large` with 143,091 words.
+- **`texts/`**: Test text files for running the program.
+- **`dictionary.c`**: Implements dictionary functions like `load`, `check`, and `unload`.
+- **`dictionary.h`**: Header file with function prototypes and constants.
+- **`speller.c`**: Main program that integrates dictionary functions and benchmarks.
+- **`Makefile`**: Automates the build process.
+
+---
 
 ## Implementation Details
 
 ### Key Functions
-- **`load`**: Loads the dictionary into memory using a hash table.
-- **`check`**: Verifies whether a word exists in the dictionary.
-- **`hash`**: Hashes words to an index in the hash table.
-- **`size`**: Returns the number of words in the loaded dictionary.
-- **`unload`**: Frees memory used by the dictionary.
+- **`load`**: Reads the dictionary file into a hash table.
+- **`check`**: Checks if a word exists in the hash table.
+- **`hash`**: Maps a word to a specific bucket in the hash table.
+- **`size`**: Returns the number of words loaded in the dictionary.
+- **`unload`**: Frees all memory used by the dictionary.
 
 ### Hash Table
-- **Buckets (`N`)**: 24,000, chosen for optimal performance after testing.
-- **Hash Function**: Based on the [djb2 algorithm](http://www.cse.yorku.ca/~oz/hash.html), which balances speed and uniqueness.
+- **Number of Buckets (`N`)**: 24,000 for optimized performance.
+- **Hash Function**: Based on the [djb2 algorithm](http://www.cse.yorku.ca/~oz/hash.html), designed for speed and uniqueness.
 
-## Benchmarks
+---
 
-The program reports execution times for:
-1. **Dictionary Loading (`load`)**: Time taken to load the dictionary.
-2. **Word Checking (`check`)**: Time taken to verify words against the dictionary.
-3. **Dictionary Size (`size`)**: Time taken to determine the size of the dictionary.
-4. **Unloading (`unload`)**: Time taken to free memory used by the dictionary.
-5. **Total Execution Time**: The sum of all times.
+## Testing the Program
 
-## Testing
-
-### Test Files
-The `texts/` directory contains several predefined text files, including:
+### Predefined Test Files
+The `texts/` directory contains various test files, such as:
 - `lalaland.txt`
 - `shakespeare.txt`
 - `tolstoy.txt`
-- `constitution.txt`
 
 ### Running Tests
 To test the program:
@@ -134,33 +190,10 @@ To test the program:
 ```
 
 ### Expected Output
-- List of misspelled words.
-- Performance benchmarks.
+- A list of misspelled words from the text.
+- Performance benchmarks for dictionary loading, word checking, and unloading.
 
-## Development Notes
-
-- **Dependencies**: Standard C libraries (`stdio.h`, `stdlib.h`, etc.).
-- **Platform**: Designed for Unix-like systems (Linux, macOS).
-- **Compiler**: Requires `clang` or `gcc`.
-
-## Makefile
-
-The provided `Makefile` automates the build process. To compile the program, run:
-```bash
-make speller
-```
-
-### Makefile Breakdown
-- Compiles `speller.c` and `dictionary.c` into object files.
-- Links the object files into the `speller` executable.
-
-Makefile content:
-```make
-speller:
-	clang -ggdb3 -O0 -Qunused-arguments -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow -c -o speller.o speller.c
-	clang -ggdb3 -O0 -Qunused-arguments -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow -c -o dictionary.o dictionary.c
-	clang -ggdb3 -O0 -Qunused-arguments -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow -o speller speller.o dictionary.o -lm
-```
+---
 
 ## Authors
 
