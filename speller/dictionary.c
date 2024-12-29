@@ -19,9 +19,6 @@ typedef struct node
 }
 node;
 
-// Number of buckets in hash table
-//the number of elements in array was arrived by trial and error
-const unsigned int N = 24000;
 
 // Hash table
 node *table[N];

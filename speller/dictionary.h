@@ -9,6 +9,10 @@
 // (e.g., pneumonoultramicroscopicsilicovolcanoconiosis)
 #define LENGTH 45
 
+// Number of buckets in hash table
+// the number of elements in array was arrived by trial and error
+#define N 24000
+
 // Prototypes
 bool check(const char *word);
 unsigned int hash(const char *word);
